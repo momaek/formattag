@@ -1,6 +1,6 @@
 ## Formattag
 
-Pretty golang struct tags
+Pretty golang struct tags. 
 
 Before format 
 ```golang
@@ -41,6 +41,18 @@ type TestStruct struct {
 }
 
 type Fset struct{}
+```
 
+### Installation
+Compile from source, which requires [Go 1.15 or newer](https://golang.org/doc/install):
+```
+go get github.com/momaek/formattag
+```
+
+### Usage 
 
 ```
+formattag -file /path/to/your/golang/file
+```
+
+This command will change your go file.
