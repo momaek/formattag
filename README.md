@@ -3,7 +3,7 @@
 Pretty golang struct tags
 
 Before format 
-```
+```golang
 // TestStruct this is a test struct
 type TestStruct struct {
 	ID            string `json:"id" xml:"id"`
@@ -21,11 +21,10 @@ type TestStruct struct {
 
 type Fset struct{}
 
-
 ```
 
 After format
-```
+```golang
 // TestStruct this is a test struct
 type TestStruct struct {
 	ID            string `json:"id"              xml:"id"`
