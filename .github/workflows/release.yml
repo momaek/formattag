@@ -1,0 +1,32 @@
+name: Release
+on:
+  create:
+    tags:
+    - v*
+
+jobs:
+  release:
+    name: Release on GitHub
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Build Binary
+      run: make build
+
+    - name: Tar
+      run: make tar
+
+    - name: Create Release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+       repo_token: "${{ secrets.GITHUB_TOKEN }}"
+       prerelease: false
+       files: |
+         formattag.tar.gz
