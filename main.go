@@ -13,27 +13,9 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/fatih/structtag"
 )
-
-// TestStruct this is a test struct
-type TestStruct struct {
-	ID            string `json:"id"              xml:"id"`
-	IfNotModified string `json:"if_not_modified" xml:"if_not_modified"`
-	Name          string `json:"name"            xml:"name"`
-
-	ThisIsAStructWodeTianNa struct {
-		FieldFromThisIsAStructWodeTianNa string `json:"field_from_this_is_a_struct_wode_tian_na" xml:"field_from_this_is_a_struct_wode_tian_na"`
-		TianName                         string `json:"tian_name"                                xml:"tian_name"`
-	} `json:"this_is_a_struct_wode_tian_na" xml:"this_is_a_struct_wode_tian_na"`
-
-	T    time.Time `json:"t"    xml:"t"`
-	Fset Fset      `json:"fset" xml:"fset"`
-}
-
-type Fset struct{}
 
 type config struct {
 	fset   *token.FileSet
@@ -125,6 +107,8 @@ type line struct {
 	result    string
 }
 
+var runID = 0
+
 func (c *config) rewrite(node ast.Node) bool {
 	st, ok := node.(*ast.StructType)
 	if !ok {
@@ -173,6 +157,7 @@ func (c *config) preProcessStruct(st *ast.StructType, inline ...bool) {
 				lastLineNum = c.fset.Position(st.Fields.List[idx+1].Pos()).Line
 			}
 
+			c.groups = append(c.groups, grp)
 			grp = group{}
 			continue
 		}
@@ -195,6 +180,7 @@ func (c *config) preProcessStruct(st *ast.StructType, inline ...bool) {
 		ln.lens = lens
 
 		lineNum := c.fset.Position(field.Pos()).Line
+
 		if lineNum-lastLineNum >= 2 {
 			lastLineNum = lineNum
 			c.groups = append(c.groups, grp)
@@ -243,10 +229,12 @@ func process(lines []*line, idx int) int {
 
 func updateResult(lines []*line, max, idx int) {
 	for _, line := range lines {
-		if l := len(line.lens); l > idx && idx < l-1 {
-			line.result += line.tags[idx] + strings.Repeat(" ", max-line.lens[idx]+1)
-		} else {
-			line.result += line.tags[idx]
+		if len(line.tags) > idx {
+			if l := len(line.lens); l > idx && idx < l-1 {
+				line.result += line.tags[idx] + strings.Repeat(" ", max-line.lens[idx]+1)
+			} else {
+				line.result += line.tags[idx]
+			}
 		}
 	}
 }
