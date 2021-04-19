@@ -66,6 +66,11 @@ set rtp+=$GOPATH/src/github.com/momaek/formattag/vim
 ```
 If you have multiple entries in your GOPATH, replace $GOPATH with the right value.
 
+If you're using go mod, replace $GOPATH with $GOMODCACH:
+```
+set rtp+=$GOMODCACH/github.com/momaek/formattag@{version}/vim
+```
+
 Running `:PrettyTag` will run formattag on the current file.
 
 Optionally, add this to your `~/.vimrc` to automatically run `formattag` on :w
