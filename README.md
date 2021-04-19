@@ -56,3 +56,17 @@ formattag -file /path/to/your/golang/file
 ```
 
 This command will change your go file.
+
+#### Vim
+Add this to your ~/.vimrc:
+```
+set rtp+=$GOPATH/src/github.com/momaek/formattag/vim
+```
+If you have multiple entries in your GOPATH, replace $GOPATH with the right value.
+
+Running `:PrettyTag` will run formattag on the current file.
+
+Optionally, add this to your `~/.vimrc` to automatically run `formattag` on :w
+```
+autocmd BufWritePost,FileWritePost *.go execute 'PrettyTag' | checktime
+```

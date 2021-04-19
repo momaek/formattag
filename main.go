@@ -49,6 +49,10 @@ func main() {
 func (c *config) write(node ast.Node) error {
 	for _, grp := range c.groups {
 		for _, line := range grp.lines {
+			if len(line.result) == 0 {
+				line.result = fmt.Sprintf("`%s`", strings.Join(line.tags, " "))
+			}
+
 			line.field.Tag.Value = line.result
 		}
 	}
@@ -180,15 +184,14 @@ func (c *config) preProcessStruct(st *ast.StructType, inline ...bool) {
 		ln.lens = lens
 
 		lineNum := c.fset.Position(field.Pos()).Line
-
 		if lineNum-lastLineNum >= 2 {
 			lastLineNum = lineNum
 			c.groups = append(c.groups, grp)
 			grp = group{}
-			continue
 		}
 
 		lastLineNum = lineNum
+
 		grp.lines = append(grp.lines, ln)
 	}
 
@@ -199,7 +202,7 @@ func (c *config) preProcessStruct(st *ast.StructType, inline ...bool) {
 
 func (c *config) process() {
 	for _, grp := range c.groups {
-		if len(grp.lines) == 1 {
+		if len(grp.lines) <= 1 {
 			continue
 		}
 
