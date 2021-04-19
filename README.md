@@ -1,8 +1,10 @@
 ## Formattag
 
-Pretty golang struct tags. 
+The tool is used to align golang struct's tags.
 
-Before format 
+eg.:
+
+Before
 ```golang
 // TestStruct this is a test struct
 type TestStruct struct {
@@ -23,7 +25,7 @@ type Fset struct{}
 
 ```
 
-After format
+After
 ```golang
 // TestStruct this is a test struct
 type TestStruct struct {
