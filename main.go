@@ -187,7 +187,9 @@ func (c *config) preProcessStruct(st *ast.StructType, inline ...bool) {
 		if lineNum-lastLineNum >= 2 {
 			lastLineNum = lineNum
 			c.groups = append(c.groups, grp)
-			grp = group{}
+			grp = group{
+				maxTagNum: tags.Len(),
+			}
 		}
 
 		lastLineNum = lineNum

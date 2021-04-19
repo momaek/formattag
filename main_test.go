@@ -16,8 +16,8 @@ type TestStruct struct {
 	T    time.Time `json:"t"    xml:"t"    bson:"t"`
 	Fset Fset      `json:"fset" xml:"fset" bson:"fset"`
 
-	CreatedAt int64 `json:"created_at,omitempty" xml:"created_at"           bson:"created_at,omitempty"`
-	UpdatedAt int64 `json:"updated_at,omitempty" xml:"updated_at,omitempty" bson:"created_at"`
+	CreatedAt int64 `json:"created_at,omitempty" xml:"created_at"           bson:"created_at"`
+	UpdatedAt int64 `json:"updated_at,omitempty" xml:"updated_at,omitempty"`
 }
 
 type Fset struct{}
