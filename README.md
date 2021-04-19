@@ -70,3 +70,15 @@ Optionally, add this to your `~/.vimrc` to automatically run `formattag` on :w
 ```
 autocmd BufWritePost,FileWritePost *.go execute 'PrettyTag' | checktime
 ```
+
+#### VSCode
+Please Install [Run On Save](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
+Add this to `settings.json` commands:
+```json
+{
+    "match": "\\.go$",
+    "isAsync": false,
+    "cmd": "/path/to/formattag -file ${file}"
+}
+```
+
