@@ -9,7 +9,6 @@ import (
 	"go/parser"
 	"go/token"
 	"io/ioutil"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -24,26 +23,28 @@ type config struct {
 }
 
 func main() {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	err := do()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 
+}
+
+func do() (err error) {
 	c, err := parseConfig(os.Args[1:])
 	if err != nil {
-		log.Fatal(err)
 		return
 	}
 
 	node, err := c.parse()
 	if err != nil {
-		log.Fatal(err)
 		return
 	}
 
 	c.format(node)
 	err = c.write(node)
-	if err != nil {
-		log.Fatal("write file failed", err)
-	}
-
+	return
 }
 
 func (c *config) write(node ast.Node) error {
@@ -152,7 +153,6 @@ func (c *config) preProcessStruct(st *ast.StructType, inline ...bool) {
 
 		tags, err := structtag.Parse(tag)
 		if err != nil {
-			log.Printf("parse tag failed %v, Field: %v, Tag: %s", err, field.Names, field.Tag.Value)
 			continue
 		}
 
