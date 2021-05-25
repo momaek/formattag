@@ -68,7 +68,7 @@ If you have multiple entries in your GOPATH, replace $GOPATH with the right valu
 
 If you're using go mod, replace $GOPATH with $GOMODCACH:
 ```
-set rtp+=$GOMODCACH/github.com/momaek/formattag@{version}/vim
+set rtp+=$GOMODCACHE/github.com/momaek/formattag@{version}/vim
 ```
 
 Running `:PrettyTag` will run formattag on the current file.
