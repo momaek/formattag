@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"flag"
 	"fmt"
 	"go/ast"
 	"go/format"
@@ -22,13 +21,14 @@ type config struct {
 	groups []group
 }
 
+var Version string
+
 func main() {
 	err := do()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-
 }
 
 func do() (err error) {
@@ -68,23 +68,50 @@ func (c *config) write(node ast.Node) error {
 	return err
 }
 
+func parseFlag(args []string) string {
+	if len(args) == 0 {
+		printHelp()
+	}
+
+	for idx, cmd := range args {
+		if cmd == "version" {
+			printVersion()
+		}
+
+		if cmd == "-file" {
+			if idx != 0 || len(args) != 2 {
+				printHelp()
+			}
+			return args[1]
+		}
+	}
+	return ""
+}
+
+func printVersion() {
+	fmt.Printf("formattag verion %s %s\n", Version, "darwin/amd64")
+	os.Exit(0)
+}
+
+func printHelp() {
+	fmt.Printf(`formattag is a tool for formatting Go source code.
+
+Usage:
+
+	formattag <command> [flags]
+
+The commands are:
+	version     print formattag version
+
+The flags are:
+	-file filename to be format
+`)
+	os.Exit(0)
+}
+
 func parseConfig(args []string) (*config, error) {
-	var (
-		file = flag.String("file", "", "Filename to be format")
-	)
-
-	if err := flag.CommandLine.Parse(args); err != nil {
-		return nil, err
-	}
-
-	if flag.NFlag() == 0 {
-		fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
-		flag.PrintDefaults()
-		return nil, flag.ErrHelp
-	}
-
 	c := &config{
-		file:   *file,
+		file:   parseFlag(args),
 		groups: []group{},
 	}
 

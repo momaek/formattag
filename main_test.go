@@ -25,3 +25,12 @@ type Fset struct{}
 func Pointer[T any](val T) *T {
 	return &T
 }
+
+func contains[T string](s []T, e T) bool {
+	for i := range s {
+		if s[i] == e {
+			return true
+		}
+	}
+	return false
+}
