@@ -46,12 +46,18 @@ type Fset struct{}
 ```
 
 ### Installation
-Compile from source, which requires [Go 1.15 or newer](https://golang.org/doc/install):
+
+####  Compile from source
+Compile from source, which requires [Go 1.18 or newer](https://golang.org/doc/install):
 ```
-go get github.com/momaek/formattag
+git clone github.com/momaek/formattag
+cd formattag && go build .
 ```
 
-### Usage 
+#### Prebuild binaries
+Please check the [release page](https://github.com/momaek/formattag/releases) and download the lastest release.
+
+### Usage
 
 ```
 formattag -file /path/to/your/golang/file
@@ -60,17 +66,12 @@ formattag -file /path/to/your/golang/file
 This command will change your go file.
 
 #### Vim
-Add this to your ~/.vimrc:
-```
-set rtp+=$GOPATH/src/github.com/momaek/formattag/vim
-```
-If you have multiple entries in your GOPATH, replace $GOPATH with the right value.
+If you're using vim or nvim, you'd better install from source.
 
-If you're using go mod, replace $GOPATH with $GOMODCACH:
+Add the following snippet to your ~/.vimrc:
 ```
-set rtp+=$GOMODCACHE/github.com/momaek/formattag@{version}/vim
+set rtp+={/path/to/your/downloaded/source}/formattag/vim
 ```
-
 Running `:PrettyTag` will run formattag on the current file.
 
 Optionally, add this to your `~/.vimrc` to automatically run `formattag` on :w
@@ -88,4 +89,3 @@ Add this to `settings.json` commands:
     "cmd": "/path/to/formattag -file ${file}"
 }
 ```
-
