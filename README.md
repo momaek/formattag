@@ -89,3 +89,7 @@ Add this to `settings.json` commands:
     "cmd": "/path/to/formattag -file ${file}"
 }
 ```
+
+#### GoLand
+e.g.
+![](images/goland_set.jpg)
