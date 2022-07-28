@@ -11,8 +11,12 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/fatih/structtag"
+	"golang.org/x/text/runes"
+	"golang.org/x/text/transform"
+	"golang.org/x/text/unicode/norm"
 )
 
 type config struct {
@@ -204,7 +208,7 @@ func (c *config) preProcessStruct(st *ast.StructType, inline ...bool) {
 		lens := make([]int, 0, tags.Len())
 		for _, key := range tags.Keys() {
 			t, _ := tags.Get(key)
-			lens = append(lens, len(t.String()))
+			lens = append(lens, length(t.String()))
 			ln.tags = append(ln.tags, t.String())
 		}
 
@@ -269,4 +273,10 @@ func updateResult(lines []*line, max, idx int) {
 			}
 		}
 	}
+}
+
+func length(s string) int {
+	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
+	normalized, _, _ := transform.String(t, s)
+	return len(normalized)
 }
