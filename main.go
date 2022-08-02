@@ -204,7 +204,7 @@ func (c *config) preProcessStruct(st *ast.StructType, inline ...bool) {
 		lens := make([]int, 0, tags.Len())
 		for _, key := range tags.Keys() {
 			t, _ := tags.Get(key)
-			lens = append(lens, len(t.String()))
+			lens = append(lens, length(t.String()))
 			ln.tags = append(ln.tags, t.String())
 		}
 
@@ -269,4 +269,8 @@ func updateResult(lines []*line, max, idx int) {
 			}
 		}
 	}
+}
+
+func length(s string) int {
+	return len([]rune(s))
 }
