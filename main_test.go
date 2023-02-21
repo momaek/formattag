@@ -23,7 +23,7 @@ type TestStruct struct {
 type Fset struct{}
 
 func Pointer[T any](val T) *T {
-	return &T
+	return &val
 }
 
 func contains[T string](s []T, e T) bool {

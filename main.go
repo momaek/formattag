@@ -21,7 +21,10 @@ type config struct {
 	groups []group
 }
 
-var Version string
+var (
+	Version string
+	dryRun  bool
+)
 
 func main() {
 	err := do()
@@ -64,6 +67,11 @@ func (c *config) write(node ast.Node) error {
 		return err
 	}
 
+	if dryRun {
+		fmt.Println(buf.String())
+		return nil
+	}
+
 	err = ioutil.WriteFile(c.file, buf.Bytes(), 0)
 	return err
 }
@@ -83,6 +91,10 @@ func parseFlag(args []string) string {
 				printHelp()
 			}
 			return args[1]
+		}
+
+		if cmd == "-dry-run" {
+			dryRun = true
 		}
 	}
 	return ""
@@ -105,6 +117,7 @@ The commands are:
 
 The flags are:
 	-file filename to be format
+	-dry-run print file
 `)
 	os.Exit(0)
 }
@@ -125,7 +138,6 @@ func (c *config) parse() (ast.Node, error) {
 }
 
 func (c *config) format(node ast.Node) (ast.Node, error) {
-
 	ast.Inspect(node, c.rewrite)
 	c.process()
 	return nil, nil
