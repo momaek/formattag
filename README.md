@@ -63,7 +63,17 @@ Please check the [release page](https://github.com/momaek/formattag/releases) an
 formattag -file /path/to/your/golang/file
 ```
 
-This command will change your go file.
+**This command will change your go file.**
+
+If you want print result on console:
+```
+formattag -file /path/to/your/golang/file -C 
+```
+
+You can also get input from stdin(result will be print on console):
+```
+cat /path/to/your/golang/file | formattag
+```
 
 #### Vim
 If you're using vim or nvim, you'd better install from source.
@@ -81,7 +91,7 @@ autocmd BufWritePost,FileWritePost *.go execute 'PrettyTag' | checktime
 
 #### VSCode
 Please Install [Run On Save](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
-Add this to `settings.json` commands:
+Add the following code snippet to `settings.json`.
 ```json
 {
     "match": "\\.go$",
