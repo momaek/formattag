@@ -1,4 +1,4 @@
-Version=${$(git describe --tags)}
+Version=$$(git describe --tags)
 build_macOS_x86:
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.version=${Version}" -o formattag-macOS-amd64 main.go
 
