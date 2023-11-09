@@ -89,6 +89,12 @@ Optionally, add this to your `~/.vimrc` to automatically run `formattag` on :w
 autocmd BufWritePost,FileWritePost *.go execute 'PrettyTag' | checktime
 ```
 
+#### Emacs
+
+Please check [https://github.com/M1ndo/gofmt-tag](https://github.com/M1ndo/gofmt-tag).
+
+Provided by [M1ndo](https://github.com/M1ndo)
+
 #### VSCode
 Please Install [Run On Save](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
 Add the following code snippet to `settings.json`.
