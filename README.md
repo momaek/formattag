@@ -47,6 +47,13 @@ type Fset struct{}
 
 ### Installation
 
+####  Using go install
+
+```
+go install github.com/momaek/formattag@latest
+```
+
+
 ####  Compile from source
 Compile from source, which requires [Go 1.18 or newer](https://golang.org/doc/install):
 ```
