@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 
@@ -34,13 +33,13 @@ func main() {
 
 	if len(file) > 0 {
 		align.Init(file)
-	}
-
-	stat, _ := os.Stdin.Stat()
-	if (stat.Mode() & os.ModeCharDevice) == 0 {
-		reader := bufio.NewReader(os.Stdin)
-		align.Init(reader)
-		writeToConsole = true
+	} else {
+		stat, _ := os.Stdin.Stat()
+		if (stat.Mode() & os.ModeCharDevice) == 0 {
+			reader := bufio.NewReader(os.Stdin)
+			align.Init(reader)
+			writeToConsole = true
+		}
 	}
 
 	b, err := align.Do()
@@ -53,5 +52,5 @@ func main() {
 		return
 	}
 
-	ioutil.WriteFile(file, b, 0)
+	os.WriteFile(file, b, 0)
 }
